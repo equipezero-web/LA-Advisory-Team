@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#080b12" />
+  <meta name="description" content="L&A Advisory Team — sistema interno de gestão, CRM, financeiro e comunicação." />
+  <link rel="manifest" href="manifest.webmanifest" />
+  <link rel="stylesheet" href="assets/css/app.css" />
+  <title>L&A Advisory Team</title>
+</head>
+<body>
+  <div class="ambient ambient-a"></div><div class="ambient ambient-b"></div>
+  <div class="app-shell">
+    <aside class="sidebar glass">
+      <div class="brand"><div class="brand-mark">L&A</div><div><strong>Advisory</strong><span>Team Command Center</span></div></div>
+      <nav id="mainNav">
+        <button class="nav-item active" data-view="dashboard">⌂ <span>Dashboard</span></button>
+        <button class="nav-item" data-view="crm">◎ <span>CRM & Clientes</span></button>
+        <button class="nav-item" data-view="projects">◇ <span>Projetos</span></button>
+        <button class="nav-item" data-view="finance">$ <span>Financeiro</span></button>
+        <button class="nav-item" data-view="tiktok">♪ <span>TikTok</span></button>
+        <button class="nav-item" data-view="flowboost">↗ <span>FlowBoost</span></button>
+        <button class="nav-item" data-view="team">◌ <span>Equipe</span></button>
+      </nav>
+      <div class="profile glass-soft"><div class="avatar">LA</div><div><strong>Equipe L&A</strong><span>Ambiente interno</span></div></div>
+    </aside>
+
+    <main>
+      <header class="topbar glass">
+        <div><p class="eyebrow">L&A ADVISORY • COMMAND CENTER</p><h1 id="pageTitle">Dashboard</h1></div>
+        <div class="top-actions"><button class="ghost" id="installBtn" hidden>Instalar App</button><button class="icon-btn">⌕</button><button class="icon-btn">♢</button><div class="avatar gold">LA</div></div>
+      </header>
+
+      <section class="view active" id="dashboard">
+        <div class="hero glass"><div><p class="eyebrow">VISÃO EXECUTIVA</p><h2>Bom dia, Equipe L&A.</h2><p>Clientes, projetos e receita em uma única central.</p></div><button class="primary" data-go="crm">+ Novo contato</button></div>
+        <div class="stats-grid">
+          <article class="stat glass"><span>Receita mensal</span><strong>R$ 0,00</strong><small>Conecte o financeiro</small></article>
+          <article class="stat glass"><span>Leads ativos</span><strong id="leadCount">0</strong><small>CRM comercial</small></article>
+          <article class="stat glass"><span>Em desenvolvimento</span><strong id="devCount">0</strong><small>Projetos ativos</small></article>
+          <article class="stat glass"><span>Mensalistas</span><strong id="monthlyCount">0</strong><small>Receita recorrente</small></article>
+        </div>
+        <div class="dashboard-grid">
+          <article class="panel glass wide"><div class="panel-head"><div><p class="eyebrow">DESEMPENHO</p><h3>Visão de faturamento</h3></div><span class="chip">Este mês</span></div><div class="chart-placeholder"><div style="height:38%"></div><div style="height:55%"></div><div style="height:44%"></div><div class="accent" style="height:82%"></div><div style="height:64%"></div><div style="height:30%"></div><div style="height:21%"></div></div></article>
+          <article class="panel glass"><div class="panel-head"><div><p class="eyebrow">ATENÇÃO</p><h3>Próximas ações</h3></div></div><div id="attentionList" class="activity-list"><div class="empty">Nenhuma pendência registrada.</div></div></article>
+          <article class="panel glass"><div class="panel-head"><div><p class="eyebrow">OPERAÇÃO</p><h3>Áreas conectadas</h3></div></div><div class="mini-grid"><button data-go="crm">CRM <b>→</b></button><button data-go="finance">Financeiro <b>→</b></button><button data-go="tiktok">TikTok <b>→</b></button><button data-go="flowboost">FlowBoost <b>→</b></button></div></article>
+        </div>
+      </section>
+
+      <section class="view" id="crm">
+        <div class="section-head"><div><p class="eyebrow">CRM L&A</p><h2>Pipeline de clientes</h2><p>Arraste os cards para atualizar cada etapa.</p></div><button class="primary" id="newClientBtn">+ Adicionar cliente</button></div>
+        <div class="kanban" id="kanban"></div>
+      </section>
+
+      <section class="view" id="projects"><div class="section-head"><div><p class="eyebrow">PROJETOS</p><h2>Desenvolvimento</h2><p>Acompanhamento de entregas, responsáveis e prazos.</p></div></div><div class="empty-state glass"><b>Central de projetos preparada.</b><span>Os projetos fechados no CRM serão vinculados aqui.</span></div></section>
+      <section class="view" id="finance"><div class="section-head"><div><p class="eyebrow">FINANCEIRO</p><h2>Faturamento & monetização</h2><p>Receita, recorrência, despesas, lucro e serviços.</p></div></div><div class="stats-grid"><article class="stat glass"><span>Receita</span><strong>R$ 0,00</strong></article><article class="stat glass"><span>Recorrência</span><strong>R$ 0,00</strong></article><article class="stat glass"><span>Despesas</span><strong>R$ 0,00</strong></article><article class="stat glass"><span>Resultado</span><strong>R$ 0,00</strong></article></div></section>
+      <section class="view" id="tiktok"><div class="section-head"><div><p class="eyebrow">TIKTOK ANALYTICS</p><h2>Conteúdo & monetização</h2><p>Desempenho, receita e vídeos em destaque.</p></div></div><div class="empty-state glass"><b>Área de TikTok pronta para integração.</b><span>Seguidores, views, engajamento, receita e ranking de vídeos aparecerão aqui.</span></div></section>
+      <section class="view" id="flowboost"><div class="section-head"><div><p class="eyebrow">FLOWBOOST</p><h2>Pedidos & faturamento</h2><p>Monitoramento da operação de seguidores.</p></div></div><div class="stats-grid"><article class="stat glass"><span>Pedidos hoje</span><strong>0</strong></article><article class="stat glass"><span>Seguidores vendidos</span><strong>0</strong></article><article class="stat glass"><span>Receita</span><strong>R$ 0,00</strong></article><article class="stat glass"><span>Pendentes</span><strong>0</strong></article></div></section>
+      <section class="view" id="team"><div class="section-head"><div><p class="eyebrow">EQUIPE</p><h2>Comunicação interna</h2><p>Canais, mensagens e atualizações ligadas aos projetos.</p></div></div><div class="empty-state glass"><b>Workspace da equipe.</b><span>Mensagens em tempo real serão ativadas com o backend.</span></div></section>
+    </main>
+  </div>
+
+  <nav class="mobile-nav glass"><button data-go="dashboard" class="active">⌂<span>Início</span></button><button data-go="crm">◎<span>CRM</span></button><button data-go="finance">$<span>Financeiro</span></button><button data-go="team">◌<span>Equipe</span></button></nav>
+
+  <dialog id="clientDialog" class="glass modal"><form id="clientForm" method="dialog"><div class="panel-head"><div><p class="eyebrow">CRM</p><h3>Novo cliente</h3></div><button type="button" class="icon-btn" id="closeDialog">×</button></div><label>Nome / empresa<input name="name" required placeholder="Nome do cliente" /></label><label>Contato<input name="contact" placeholder="WhatsApp, Instagram ou e-mail" /></label><label>Serviço<input name="service" placeholder="Site, design, gestão..." /></label><label>Valor estimado<input name="value" type="number" min="0" step="0.01" placeholder="0,00" /></label><label>Observações<textarea name="notes" rows="4" placeholder="Detalhes importantes da negociação..."></textarea></label><button class="primary full" type="submit">Salvar cliente</button></form></dialog>
+
+  <script src="assets/js/app.js"></script>
+</body>
+</html>
