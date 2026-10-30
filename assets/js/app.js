@@ -885,7 +885,7 @@ function showLogin(){
             {
               username,
               password,
-              captcha_token:
+              captchatoken:
                 state.captchaToken
             }
           );
@@ -1180,7 +1180,7 @@ function showRegister(){
 
             password,
 
-            captcha_token:
+            captchatoken:
               state.captchaToken
           }
         );
