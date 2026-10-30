@@ -64,11 +64,66 @@
     form.insertBefore(button, status);
   }
 
-  const observer = new MutationObserver(addPublicButton);
+  function enhanceMemberAdmin() {
+    const box = q('#memberAdmin');
+    if (!box || typeof state === 'undefined' || state.member?.role !== 'admin') return;
+
+    box.querySelectorAll('.member-action[data-action="approve"]').forEach((approveButton) => {
+      const userId = approveButton.dataset.id;
+      const member = state.members?.find((item) => item.user_id === userId);
+      const actions = approveButton.parentElement;
+      const row = approveButton.closest('.data-row');
+      const status = row?.querySelector('span');
+      if (!member || !actions) return;
+
+      if (member.rejected_at) {
+        approveButton.remove();
+        if (status) status.textContent = `${member.username || ''} • Operador • Recusado`;
+        if (!actions.querySelector('.member-rejected-label')) {
+          const label = document.createElement('span');
+          label.className = 'member-rejected-label';
+          label.textContent = 'Solicitação recusada';
+          label.style.opacity = '.72';
+          actions.appendChild(label);
+        }
+        return;
+      }
+
+      if (actions.querySelector('.member-reject-action')) return;
+      const rejectButton = document.createElement('button');
+      rejectButton.type = 'button';
+      rejectButton.className = 'ghost member-reject-action';
+      rejectButton.textContent = 'Recusar';
+      rejectButton.dataset.id = userId;
+      rejectButton.onclick = async () => {
+        rejectButton.disabled = true;
+        approveButton.disabled = true;
+        try {
+          const { data, error } = await db.rpc('la_team_reject_member', { p_user_id: userId });
+          if (error) throw error;
+          if (data?.ok === false) throw new Error(data.error || 'Não foi possível recusar a solicitação.');
+          await loadMembers();
+          toast('Solicitação recusada com sucesso.');
+        } catch (error) {
+          console.error(error);
+          toast(error.message || 'Não foi possível recusar a solicitação.');
+          rejectButton.disabled = false;
+          approveButton.disabled = false;
+        }
+      };
+      actions.appendChild(rejectButton);
+    });
+  }
+
+  const observer = new MutationObserver(() => {
+    addPublicButton();
+    enhanceMemberAdmin();
+  });
   observer.observe(document.documentElement, { childList: true, subtree: true });
 
   window.addEventListener('DOMContentLoaded', () => {
     addPublicButton();
+    enhanceMemberAdmin();
     if (sessionStorage.getItem(PUBLIC_MODE_KEY) === '1') publicScreen();
   });
 })();
