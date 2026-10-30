@@ -60,3 +60,4 @@
 })();
 
 (()=>{const s=document.createElement('script');s.src='assets/js/client-tools.js?v=2';s.defer=true;document.body.appendChild(s);})();
+(()=>{const s=document.createElement('script');s.src='assets/js/auth-access-ui.js?v=1';s.defer=true;document.body.appendChild(s);})();
