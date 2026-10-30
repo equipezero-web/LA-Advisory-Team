@@ -1,0 +1,1 @@
+PWA icons for L&A Advisory Team. Required production files: icon-192.png, icon-512.png and icon-maskable-512.png.
