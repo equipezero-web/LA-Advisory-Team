@@ -1,0 +1,1 @@
+L&A Advisory Team PWA setup in progress. Manifest is located at /manifest.webmanifest.
