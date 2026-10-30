@@ -2,6 +2,45 @@
 (()=>{
   let installed=false;
 
+  function subtleSent(){
+    let el=document.querySelector('#messageSentHint');
+    if(!el){
+      el=document.createElement('span');
+      el.id='messageSentHint';
+      Object.assign(el.style,{
+        position:'fixed',
+        right:'18px',
+        bottom:'18px',
+        zIndex:'1000',
+        padding:'6px 10px',
+        borderRadius:'9px',
+        background:'rgba(20,23,31,.72)',
+        border:'1px solid rgba(255,255,255,.08)',
+        color:'rgba(255,255,255,.68)',
+        fontSize:'11px',
+        fontWeight:'500',
+        lineHeight:'1',
+        opacity:'0',
+        transform:'translateY(4px)',
+        transition:'opacity .18s ease, transform .18s ease',
+        pointerEvents:'none',
+        boxShadow:'0 4px 14px rgba(0,0,0,.12)'
+      });
+      document.body.appendChild(el);
+    }
+
+    el.textContent='Mensagem enviada';
+    clearTimeout(el._hideTimer);
+    requestAnimationFrame(()=>{
+      el.style.opacity='.82';
+      el.style.transform='translateY(0)';
+    });
+    el._hideTimer=setTimeout(()=>{
+      el.style.opacity='0';
+      el.style.transform='translateY(4px)';
+    },1200);
+  }
+
   function install(){
     if(installed) return true;
 
@@ -54,12 +93,11 @@
         state.chatDay=dayKey(data.created_at);
         form.reset();
 
-        // Recarrega do banco para manter histórico/datas sincronizados.
         await loadMessages();
         state.chatDay=dayKey(data.created_at);
         renderMessages();
 
-        toast('Mensagem enviada.');
+        subtleSent();
       }catch(error){
         console.error('team_message_send_failed',error);
         toast('Não foi possível enviar a mensagem. Tente novamente.');
