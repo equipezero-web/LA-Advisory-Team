@@ -26,13 +26,8 @@
     const holder=document.querySelector('#conversationDates');
     if(!holder) return;
     const days=[...new Set(state.messages.map(m=>dayKey(m.created_at)))].sort().reverse();
-    holder.innerHTML=days.map(d=>`
-      <button class="conversation-date ${d===state.chatDay?'active':''}" data-day="${d}">
-        <b>${dayLabel(d)}</b><span>${state.messages.filter(m=>dayKey(m.created_at)===d).length} mensagens</span>
-      </button>`).join('')||'<div class="empty">Nenhuma conversa.</div>';
-    holder.querySelectorAll('.conversation-date').forEach(b=>{
-      b.onclick=()=>{state.chatDay=b.dataset.day;refreshDateList();renderMessages();};
-    });
+    holder.innerHTML=days.map(d=>`<button class="conversation-date ${d===state.chatDay?'active':''}" data-day="${d}"><b>${dayLabel(d)}</b><span>${state.messages.filter(m=>dayKey(m.created_at)===d).length} mensagens</span></button>`).join('')||'<div class="empty">Nenhuma conversa.</div>';
+    holder.querySelectorAll('.conversation-date').forEach(b=>{b.onclick=()=>{state.chatDay=b.dataset.day;refreshDateList();renderMessages();};});
   }
 
   function install(){
@@ -40,50 +35,28 @@
     const form=document.querySelector('#teamMessageForm');
     if(!form || typeof db==='undefined' || !db || typeof state==='undefined' || !state || typeof renderMessages!=='function') return false;
     installed=true;
-
     form.onsubmit=async event=>{
       event.preventDefault();
       if(form.dataset.sending==='1') return;
       if(!state.user?.id){toast('Sua sessão não está disponível. Entre novamente.');return;}
-
       const textarea=form.querySelector('textarea[name="body"]');
       const button=form.querySelector('button[type="submit"]');
       const body=String(textarea?.value||'').trim();
       if(!body) return;
-
       form.dataset.sending='1';
       if(button){button.disabled=true;button.dataset.label=button.textContent;button.textContent='Enviando...';}
-
       try{
-        const {data,error}=await db.from('la_team_messages').insert({
-          channel:'general',author_id:state.user.id,body
-        }).select('id,channel,author_id,body,created_at').single();
+        const {data,error}=await db.from('la_team_messages').insert({channel:'general',author_id:state.user.id,body}).select('id,channel,author_id,body,created_at').single();
         if(error) throw error;
-
-        // Atualização local imediata: não depende de novo SELECT para aparecer na tela.
-        state.messages=state.messages.filter(m=>m.id!==data.id);
-        state.messages.push(data);
-        state.messages.sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
-        state.chatDay=dayKey(data.created_at);
-        form.reset();
-        refreshDateList();
-        renderMessages();
-        subtleSent();
-
-        // Sincroniza silenciosamente depois, sem bloquear a renderização.
+        state.messages=state.messages.filter(m=>m.id!==data.id);state.messages.push(data);state.messages.sort((a,b)=>new Date(a.created_at)-new Date(b.created_at));
+        state.chatDay=dayKey(data.created_at);form.reset();refreshDateList();renderMessages();subtleSent();
         Promise.resolve(loadMessages()).catch(error=>console.error('team_messages_sync_failed',error));
-      }catch(error){
-        console.error('team_message_send_failed',error);
-        toast('Não foi possível enviar a mensagem. Tente novamente.');
-      }finally{
-        delete form.dataset.sending;
-        if(button){button.disabled=false;button.textContent=button.dataset.label||'Enviar';delete button.dataset.label;}
-        textarea?.focus();
-      }
+      }catch(error){console.error('team_message_send_failed',error);toast('Não foi possível enviar a mensagem. Tente novamente.');}
+      finally{delete form.dataset.sending;if(button){button.disabled=false;button.textContent=button.dataset.label||'Enviar';delete button.dataset.label;}textarea?.focus();}
     };
     return true;
   }
-
-  const timer=setInterval(()=>{if(install()) clearInterval(timer);},100);
-  setTimeout(()=>clearInterval(timer),15000);
+  const timer=setInterval(()=>{if(install()) clearInterval(timer);},100);setTimeout(()=>clearInterval(timer),15000);
 })();
+
+(()=>{const s=document.createElement('script');s.src='assets/js/client-tools.js?v=2';s.defer=true;document.body.appendChild(s);})();
