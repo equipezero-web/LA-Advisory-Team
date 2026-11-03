@@ -1,4 +1,4 @@
-const CACHE='la-advisory-team-v2';
+const CACHE='la-advisory-team-v3-auth-isolation';
 const APP_SHELL=[
   './',
   './index.html',
