@@ -1242,7 +1242,7 @@ async function authorize(session){
     !data?.approved_at
   ){
 
-    await db.auth.signOut();
+    await db.auth.signOut({scope:'local'});
 
     showLogin();
 
@@ -1326,7 +1326,7 @@ function ensureAccountUI(){
         );
       }
 
-      await db.auth.signOut();
+      await db.auth.signOut({scope:'local'});
 
       state.user=null;
       state.member=null;
@@ -1581,6 +1581,7 @@ async function init(){
     {
       auth:{
         persistSession:true,
+        storageKey:'la-advisory-team-auth-v1',
         autoRefreshToken:true,
         detectSessionInUrl:true
       }
