@@ -350,7 +350,7 @@ async function runAI(button){
     }
 
     target.textContent=
-      data.report||'Relatório concluído.';
+      data.text||data.report||'Relatório concluído.';
 
     toast(
       'Relatório IA salvo no histórico.'
