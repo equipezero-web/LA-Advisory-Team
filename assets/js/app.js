@@ -105,10 +105,12 @@ function go(v){
     finance:'Financeiro',
     tiktok:'TikTok Intelligence',
     flowboost:'FlowBoost Intelligence',
+    royal:'Royal Intelligence',
     team:'Equipe'
   }[v]||'L&A';
 
   if(v==='flowboost') loadFlow();
+  if(v==='royal' && window.loadRoyalIntelligence) window.loadRoyalIntelligence();
   if(v==='tiktok') loadTikTok();
 
   if(v==='team'){
