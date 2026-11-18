@@ -1,4 +1,4 @@
-const CACHE='la-advisory-team-v4-mobile-navigation';
+const CACHE='la-advisory-team-v5-ai-history';
 const APP_SHELL=[
   './',
   './index.html',
@@ -6,6 +6,7 @@ const APP_SHELL=[
   './assets/css/app.css',
   './assets/css/features.css',
   './assets/js/app.js',
+  './assets/js/ai-report-history.js?v=1',
   './assets/icons/icon-192.png',
   './assets/icons/icon-512.png',
   './assets/icons/icon-maskable-512.png'
