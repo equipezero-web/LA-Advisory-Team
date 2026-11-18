@@ -1,4 +1,4 @@
-const CACHE='la-advisory-team-v6-royal-intelligence';
+const CACHE='la-advisory-team-v7-royal-events';
 const APP_SHELL=[
   './',
   './index.html',
